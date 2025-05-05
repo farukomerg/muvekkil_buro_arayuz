@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müvekkil Arayüzü</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 30px;
+        }
+        
+        .logo h2 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .nav-menu a {
+            display: block;
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 12px 20px;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: #34495e;
+            border-left: 4px solid #3498db;
+        }
+        
+        .nav-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title h1 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Dashboard Styles */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        
+        .card-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .card-footer {
+            font-size: 14px;
+            color: #3498db;
+        }
+        
+        /* Profile Modal */
+        .profile-modal, .lawyers-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        /* Cases Table */
+        .cases-table, .hearings-table {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        tr {
+            cursor: pointer;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-closed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Case Detail */
+        .case-detail {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .case-title {
+            font-size: 20px;
+            color: #2c3e50;
+        }
+        
+        .case-id {
+            color: #7f8c8d;
+        }
+        
+        .case-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ecf0f1;
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+        
+        .step.active .step-number {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        
+        .step.active .step-label {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        .step.completed .step-label {
+            color: #2ecc71;
+        }
+        
+        /* Hearing Button */
+        .hearing-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .hearing-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        /* About Page */
+        .about-page {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .about-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .about-content {
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-info, .case-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Hukuk Bürosu</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="active" id="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" id="profile-link"><i class="fas fa-user"></i> Profil</a></li>
+                <li><a href="#" id="lawyers-link"><i class="fas fa-user-tie"></i> Avukatlarım</a></li>
+                <li><a href="#" id="cases-link"><i class="fas fa-gavel"></i> Davalarım</a></li>
+                <li><a href="#" id="hearings-link"><i class="fas fa-balance-scale"></i> Duruşmalarım</a></li>
+                <li><a href="#" id="about-link"><i class="fas fa-info-circle"></i> Hakkımızda</a></li>
+                <li><a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <!-- Dashboard Content -->
+            <div id="dashboard-content">
+                <div class="header">
+                    <div class="page-title">
+                        <h1>Hoş Geldiniz, Ahmet Bey</h1>
+                    </div>
+                    <div class="user-info" id="user-profile-btn">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Resmi">
+                        <span>Ahmet Yılmaz</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="card" id="profile-card">
+                        <div class="card-header">
+                            <span class="card-title">Profil Bilgileri</span>
+                            <i class="fas fa-user" style="color: #3498db;"></i>
+                        </div>
+                        <div class="card-value">Güncel</div>
+                        <div class="card-footer">Son güncelleme: 15.06.2023</div>
+                    </div>
+                    
+                    <div class="card" id="lawyers-card">
+                        <div class="card-header">
+                            <span class="card-title">Avukatlarım</span>
+                            <i class="fas fa-user-tie" style="color: #e74c3c;"></i>
+                        </div>
+                        <div class="card-value">2</div>
+                        <div class="card-footer">Aktif avukatlar</div>
+                    </div>
+                    
+                    <div class="card" id="cases-card">
+                        <div class="card-header">
+                            <span class="card-title">Aktif Davalar</span>
+                            <i class="fas fa-gavel" style="color: #2ecc71;"></i>
+                        </div>
+                        <div class="card-value">3</div>
+                        <div class="card-footer">Son 6 ay</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cases Content -->
+            <div id="cases-content" style="display: none;">
+                <div class="header">
+                    <div class="page-title">
+                        <h1>Davalarım</h1>
+                    </div>
+                    <div class="user-info" id="user-profile-btn2">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Resmi">
+                        <span>Ahmet Yılmaz</span>
+                    </div>
+                </div>
+                
+                <div class="cases-table">
+                    <h2 class="section-title">Davalar Listesi</h2>
+                    <table id="cases-table">
+                        <thead>
+                            <tr>
+                                <th>Dava No</th>
+                                <th>Konu</th>
+                                <th>Avukat</th>
+                                <th>Başlangıç Tarihi</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-case-id="2023-145">
+                                <td>#2023-145</td>
+                                <td>Boşanma Davası</td>
+                                <td>Ayşe Demir</td>
+                                <td>15.05.2023</td>
+                                <td><span class="status status-active">Aktif</span></td>
+                            </tr>
+                            <tr data-case-id="2023-112">
+                                <td>#2023-112</td>
+                                <td>Miras Paylaşımı</td>
+                                <td>Mehmet Kaya</td>
+                                <td>22.04.2023</td>
+                                <td><span class="status status-pending">Beklemede</span></td>
+                            </tr>
+                            <tr data-case-id="2023-087">
+                                <td>#2023-087</td>
+                                <td>İş Mahkemesi</td>
+                                <td>Ali Yıldız</td>
+                                <td>10.03.2023</td>
+                                <td><span class="status status-closed">Kapandı</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Case Detail -->
+                <div class="case-detail" id="case-detail">
+                    <div class="case-header">
+                        <div>
+                            <h2 class="case-title" id="detail-case-title">Boşanma Davası</h2>
+                            <div class="case-id" id="detail-case-id">#2023-145</div>
+                        </div>
+                        <div>
+                            <span class="status status-active" id="detail-case-status">Aktif</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-info">
+                        <div>
+                            <div class="info-item">
+                                <div class="info-label">Avukat</div>
+                                <div class="info-value" id="detail-lawyer">Ayşe Demir</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Başlangıç Tarihi</div>
+                                <div class="info-value" id="detail-start-date">15.05.2023</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="info-item">
+                                <div class="info-label">Mahkeme</div>
+                                <div class="info-value" id="detail-court">İstanbul 3. Aile Mahkemesi</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Dosya No</div>
+                                <div class="info-value" id="detail-file-number">2023/145</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Steps -->
+                    <div class="progress-steps">
+                        <div class="step completed" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Dava Açma</div>
+                        </div>
+                        <div class="step completed" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Cevap Dilekçesi</div>
+                        </div>
+                        <div class="step active" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Duruşma</div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-label">Deliller</div>
+                        </div>
+                        <div class="step" data-step="5">
+                            <div class="step-number">5</div>
+                            <div class="step-label">Kesinleşme</div>
+                        </div>
+                        <div class="step" data-step="6">
+                            <div class="step-number">6</div>
+                            <div class="step-label">Karar</div>
+                        </div>
+                        <div class="step" data-step="7">
+                            <div class="step-number">7</div>
+                            <div class="step-label">Temyiz</div>
+                        </div>
+                        <div class="step" data-step="8">
+                            <div class="step-number">8</div>
+                            <div class="step-label">İnfaz</div>
+                        </div>
+                        <div class="step" data-step="9">
+                            <div class="step-number">9</div>
+                            <div class="step-label">Sonuç</div>
+                        </div>
+                    </div>
+                    
+                    <button class="hearing-btn" id="hearing-btn">Duruşma Bilgileri</button>
+                    
+                    <!-- Hearings Table (Initially hidden) -->
+                    <div class="hearings-table" id="hearings-table" style="display: none; margin-top: 20px;">
+                        <h2 class="section-title">Duruşma Bilgileri</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tarih</th>
+                                    <th>Saat</th>
+                                    <th>Mahkeme</th>
+                                    <th>Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>10.06.2023</td>
+                                    <td>10:00</td>
+                                    <td>İstanbul 3. Aile Mahkemesi</td>
+                                    <td><span class="status status-pending">Bekliyor</span></td>
+                                </tr>
+                                <tr>
+                                    <td>25.05.2023</td>
+                                    <td>14:30</td>
+                                    <td>İstanbul 3. Aile Mahkemesi</td>
+                                    <td><span class="status status-closed">Tamamlandı</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hearings Content -->
+            <div id="hearings-content" style="display: none;">
+                <div class="header">
+                    <div class="page-title">
+                        <h1>Duruşmalarım</h1>
+                    </div>
+                    <div class="user-info" id="user-profile-btn3">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Resmi">
+                        <span>Ahmet Yılmaz</span>
+                    </div>
+                </div>
+                
+                <div class="hearings-table">
+                    <h2 class="section-title">Tüm Duruşmalar</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dava No</th>
+                                <th>Konu</th>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>Mahkeme</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#2023-145</td>
+                                <td>Boşanma Davası</td>
+                                <td>10.06.2023</td>
+                                <td>10:00</td>
+                                <td>İstanbul 3. Aile Mahkemesi</td>
+                                <td><span class="status status-pending">Bekliyor</span></td>
+                            </tr>
+                            <tr>
+                                <td>#2023-112</td>
+                                <td>Miras Paylaşımı</td>
+                                <td>05.06.2023</td>
+                                <td>11:30</td>
+                                <td>İstanbul 2. Sulh Hukuk Mahkemesi</td>
+                                <td><span class="status status-active">Devam Ediyor</span></td>
+                            </tr>
+                            <tr>
+                                <td>#2023-145</td>
+                                <td>Boşanma Davası</td>
+                                <td>25.05.2023</td>
+                                <td>14:30</td>
+                                <td>İstanbul 3. Aile Mahkemesi</td>
+                                <td><span class="status status-closed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>#2023-112</td>
+                                <td>Miras Paylaşımı</td>
+                                <td>15.05.2023</td>
+                                <td>09:45</td>
+                                <td>İstanbul 2. Sulh Hukuk Mahkemesi</td>
+                                <td><span class="status status-closed">Tamamlandı</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- About Content -->
+            <div id="about-content" style="display: none;">
+                <div class="header">
+                    <div class="page-title">
+                        <h1>Hakkımızda</h1>
+                    </div>
+                    <div class="user-info" id="user-profile-btn4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Resmi">
+                        <span>Ahmet Yılmaz</span>
+                    </div>
+                </div>
+                
+                <div class="about-page">
+                    <h2 class="about-title">Hukuk Bürosu Hakkında</h2>
+                    <div class="about-content">
+                        <p>Hukuk Bürosu, müvekkillerine en iyi hukuki hizmeti sunmak amacıyla 2010 yılında kurulmuştur. Alanında uzman avukat kadromuzla, müvekkillerimizin haklarını en etkili şekilde korumak için çalışıyoruz.</p>
+                        <p style="margin-top: 15px;">Uzmanlık alanlarımız arasında aile hukuku, miras hukuku, iş hukuku, ticaret hukuku ve ceza hukuku bulunmaktadır. Her müvekkilimize özel ilgi gösteriyor ve dava süreçlerini şeffaf bir şekilde yönetiyoruz.</p>
+                        <p style="margin-top: 15px;">Bu platform, müvekkillerimizin davalarını takip edebilmeleri, avukatlarıyla iletişim kurabilmeleri ve süreçler hakkında güncel bilgi alabilmeleri için tasarlanmıştır.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profile-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-profile">&times;</span>
+            <h2 class="modal-title">Profil Bilgileri</h2>
+            <div class="profile-info">
+                <div>
+                    <div class="info-item">
+                        <div class="info-label">Ad Soyad</div>
+                        <div class="info-value">Ahmet Yılmaz</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">TC Kimlik No</div>
+                        <div class="info-value">12345678901</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Doğum Tarihi</div>
+                        <div class="info-value">15.03.1985</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="info-item">
+                        <div class="info-label">Telefon</div>
+                        <div class="info-value">0555 555 55 55</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">E-posta</div>
+                        <div class="info-value">ahmet.yilmaz@example.com</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Adres</div>
+                        <div class="info-value">İstanbul, Beşiktaş</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lawyers Modal -->
+    <div class="lawyers-modal" id="lawyers-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-lawyers">&times;</span>
+            <h2 class="modal-title">Avukatlarım</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Avukat</th>
+                        <th>Uzmanlık</th>
+                        <th>İletişim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ayşe Demir</td>
+                        <td>Aile Hukuku</td>
+                        <td>ayse.demir@hukukburosu.com</td>
+                    </tr>
+                    <tr>
+                        <td>Mehmet Kaya</td>
+                        <td>Miras Hukuku</td>
+                        <td>mehmet.kaya@hukukburosu.com</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        // Sayfa yüklendiğinde dashboard göster
+        document.addEventListener('DOMContentLoaded', function() {
+            showDashboard();
+        });
+        
+        // Menü yönlendirmeleri
+        document.getElementById('dashboard-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showDashboard();
+            setActiveLink(this);
+        });
+        
+        document.getElementById('profile-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showProfileModal();
+            setActiveLink(this);
+        });
+        
+        document.getElementById('lawyers-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showLawyersModal();
+            setActiveLink(this);
+        });
+        
+        document.getElementById('cases-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showCases();
+            setActiveLink(this);
+        });
+        
+        document.getElementById('hearings-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showHearings();
+            setActiveLink(this);
+        });
+        
+        document.getElementById('about-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showAbout();
+            setActiveLink(this);
+        });
+        
+        document.getElementById('logout-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Çıkış yapılıyor...');
+            setActiveLink(this);
+        });
+        
+        // Kart tıklamaları
+        document.getElementById('profile-card').addEventListener('click', function() {
+            showProfileModal();
+        });
+        
+        document.getElementById('lawyers-card').addEventListener('click', function() {
+            showLawyersModal();
+        });
+        
+        document.getElementById('cases-card').addEventListener('click', function() {
+            showCases();
+        });
+        
+        // Profil butonları
+        document.getElementById('user-profile-btn').addEventListener('click', function() {
+            showProfileModal();
+        });
+        
+        document.getElementById('user-profile-btn2').addEventListener('click', function() {
+            showProfileModal();
+        });
+        
+        document.getElementById('user-profile-btn3').addEventListener('click', function() {
+            showProfileModal();
+        });
+        
+        document.getElementById('user-profile-btn4').addEventListener('click', function() {
+            showProfileModal();
+        });
+        
+        // Davalar tablosu tıklamaları
+        document.querySelectorAll('#cases-table tbody tr').forEach(row => {
+            row.addEventListener('click', function() {
+                const caseId = this.getAttribute('data-case-id');
+                showCaseDetail(caseId);
+            });
+        });
+        
+        // Duruşma bilgileri butonu
+        document.getElementById('hearing-btn').addEventListener('click', function() {
+            const currentStep = document.querySelector('.step.active').getAttribute('data-step');
+            if (currentStep === '3') {
+                document.getElementById('hearings-table').style.display = 'block';
+            }
+        });
+        
+        // Modal kapatma butonları
+        document.getElementById('close-profile').addEventListener('click', function() {
+            document.getElementById('profile-modal').style.display = 'none';
+        });
+        
+        document.getElementById('close-lawyers').addEventListener('click', function() {
+            document.getElementById('lawyers-modal').style.display = 'none';
+        });
+        
+        // Fonksiyonlar
+        function setActiveLink(link) {
+            document.querySelectorAll('.nav-menu a').forEach(item => {
+                item.classList.remove('active');
+            });
+            link.classList.add('active');
+        }
+        
+        function showDashboard() {
+            hideAllContent();
+            document.getElementById('dashboard-content').style.display = 'block';
+        }
+        
+        function showCases() {
+            hideAllContent();
+            document.getElementById('cases-content').style.display = 'block';
+        }
+        
+        function showHearings() {
+            hideAllContent();
+            document.getElementById('hearings-content').style.display = 'block';
+        }
+        
+        function showAbout() {
+            hideAllContent();
+            document.getElementById('about-content').style.display = 'block';
+        }
+        
+        function hideAllContent() {
+            document.getElementById('dashboard-content').style.display = 'none';
+            document.getElementById('cases-content').style.display = 'none';
+            document.getElementById('hearings-content').style.display = 'none';
+            document.getElementById('about-content').style.display = 'none';
+            document.getElementById('case-detail').style.display = 'none';
+        }
+        
+        function showProfileModal() {
+            document.getElementById('profile-modal').style.display = 'flex';
+        }
+        
+        function showLawyersModal() {
+            document.getElementById('lawyers-modal').style.display = 'flex';
+        }
+        
+        function showCaseDetail(caseId) {
+            // Gerçek uygulamada burada API çağrısı yapılır
+            const caseData = {
+                '2023-145': {
+                    title: 'Boşanma Davası',
+                    lawyer: 'Ayşe Demir',
+                    startDate: '15.05.2023',
+                    court: 'İstanbul 3. Aile Mahkemesi',
+                    fileNumber: '2023/145',
+                    status: 'Aktif',
+                    currentStep: 3
+                },
+                '2023-112': {
+                    title: 'Miras Paylaşımı',
+                    lawyer: 'Mehmet Kaya',
+                    startDate: '22.04.2023',
+                    court: 'İstanbul 2. Sulh Hukuk Mahkemesi',
+                    fileNumber: '2023/112',
+                    status: 'Beklemede',
+                    currentStep: 2
+                },
+                '2023-087': {
+                    title: 'İş Mahkemesi',
+                    lawyer: 'Ali Yıldız',
+                    startDate: '10.03.2023',
+                    court: 'İstanbul 1. İş Mahkemesi',
+                    fileNumber: '2023/87',
+                    status: 'Kapandı',
+                    currentStep: 9
+                }
+            };
+            
+            const data = caseData[caseId];
+            
+            document.getElementById('detail-case-title').textContent = data.title;
+            document.getElementById('detail-case-id').textContent = '#' + caseId;
+            document.getElementById('detail-lawyer').textContent = data.lawyer;
+            document.getElementById('detail-start-date').textContent = data.startDate;
+            document.getElementById('detail-court').textContent = data.court;
+            document.getElementById('detail-file-number').textContent = data.fileNumber;
+            
+            // Durum güncelleme
+            const statusElement = document.getElementById('detail-case-status');
+            statusElement.textContent = data.status;
+            statusElement.className = 'status';
+            statusElement.classList.add('status-' + (data.status === 'Aktif' ? 'active' : data.status === 'Beklemede' ? 'pending' : 'closed'));
+            
+            // Adım güncelleme
+            document.querySelectorAll('.step').forEach(step => {
+                const stepNum = parseInt(step.getAttribute('data-step'));
+                step.className = 'step';
+                
+                if (stepNum < data.currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNum === data.currentStep) {
+                    step.classList.add('active');
+                }
+            });
+            
+            // Duruşma butonunu ayarla
+            const hearingBtn = document.getElementById('hearing-btn');
+            if (data.currentStep === 3) {
+                hearingBtn.disabled = false;
+            } else {
+                hearingBtn.disabled = true;
+            }
+            
+            // Duruşma tablosunu gizle
+            document.getElementById('hearings-table').style.display = 'none';
+            
+            // Detayları göster
+            document.getElementById('case-detail').style.display = 'block';
+        }
+        
+        // Modal dışına tıklayınca kapat
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('profile-modal')) {
+                document.getElementById('profile-modal').style.display = 'none';
+            }
+            if (e.target === document.getElementById('lawyers-modal')) {
+                document.getElementById('lawyers-modal').style.display = 'none';
+            }
+        });
+    </script>
+</
