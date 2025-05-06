@@ -17,6 +17,75 @@
             color: #333;
         }
         
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2c3e50;
+        }
+        
+        .login-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .login-title h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .login-title p {
+            color: #7f8c8d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Main Container Styles */
         .container {
             display: flex;
             min-height: 100vh;
@@ -205,7 +274,7 @@
         }
         
         /* Cases Table */
-        .cases-table, .hearings-table {
+        .cases-table, .hearings-table, .my-cases-table {
             background-color: white;
             border-radius: 8px;
             padding: 20px;
@@ -526,6 +595,30 @@
             margin-top: 20px;
         }
         
+        /* About Page */
+        .about-page {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .about-page h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .about-page p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        /* My Cases Page */
+        .my-cases-page {
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -558,7 +651,117 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+        <div class="login-box">
+            <div class="login-title">
+                <h2>Avukat Girişi</h2>
+                <p>Hesabınıza erişmek için giriş yapın</p>
+            </div>
+            <div class="form-group">
+                <label for="email">E-posta</label>
+                <input type="email" id="email" placeholder="E-posta adresinizi giriniz">
+            </div>
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" placeholder="Şifrenizi giriniz">
+            </div>
+            <button class="login-btn" id="login-btn">Giriş Yap</button>
+            <button class="login-btn" id="client-register-btn" style="margin-top: 10px; background-color: #2ecc71;">Müvekkil Olarak Hesap Oluştur</button>
+            <button class="login-btn" id="lawyer-register-btn" style="margin-top: 10px; background-color: #3498db;">Avukat Olarak Hesap Oluştur</button>
+        </div>
+    </div>
+    
+    <!-- Lawyer Register Page -->
+    <div class="login-container" id="lawyer-register-page" style="display: none;">
+        <div class="login-box">
+            <div class="login-title">
+                <h2>Avukat Kayıt Formu</h2>
+            </div>
+            <div class="form-group">
+                <label for="lawyer-name">Ad</label>
+                <input type="text" id="lawyer-name" placeholder="Adınızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="lawyer-surname">Soyad</label>
+                <input type="text" id="lawyer-surname" placeholder="Soyadınızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="lawyer-phone">Telefon Numarası</label>
+                <input type="tel" id="lawyer-phone" placeholder="Telefon numaranızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="lawyer-tc">TC Kimlik No</label>
+                <input type="text" id="lawyer-tc" placeholder="TC kimlik numaranızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="lawyer-email">E-posta</label>
+                <input type="email" id="lawyer-email" placeholder="E-posta adresinizi giriniz">
+            </div>
+            <div class="form-group">
+                <label for="lawyer-password">Şifre</label>
+                <input type="password" id="lawyer-password" placeholder="Şifrenizi giriniz">
+            </div>
+            <div class="form-group">
+                <label for="lawyer-bar-no">Baro Numarası</label>
+                <input type="text" id="lawyer-bar-no" placeholder="Baro numaranızı giriniz">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="lawyer-city">İl</label>
+                    <input type="text" id="lawyer-city" placeholder="İlinizi giriniz">
+                </div>
+                <div class="form-group">
+                    <label for="lawyer-district">İlçe</label>
+                    <input type="text" id="lawyer-district" placeholder="İlçenizi giriniz">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lawyer-address">Adres</label>
+                <textarea id="lawyer-address" placeholder="Adresinizi giriniz"></textarea>
+            </div>
+            <button class="login-btn" id="submit-lawyer-register">Kayıt Ol</button>
+            <button class="login-btn" id="cancel-lawyer-register" style="background-color: #e74c3c; margin-top: 10px;">İptal</button>
+        </div>
+    </div>
+    
+    <!-- Client Register Page -->
+    <div class="login-container" id="client-register-page" style="display: none;">
+        <div class="login-box">
+            <div class="login-title">
+                <h2>Müvekkil Kayıt Formu</h2>
+            </div>
+            <div class="form-group">
+                <label for="client-name">Ad</label>
+                <input type="text" id="client-name" placeholder="Adınızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="client-surname">Soyad</label>
+                <input type="text" id="client-surname" placeholder="Soyadınızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="client-phone">Telefon Numarası</label>
+                <input type="tel" id="client-phone" placeholder="Telefon numaranızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="client-tc">TC Kimlik No</label>
+                <input type="text" id="client-tc" placeholder="TC kimlik numaranızı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="client-email">E-posta</label>
+                <input type="email" id="client-email" placeholder="E-posta adresinizi giriniz">
+            </div>
+            <div class="form-group">
+                <label for="client-password">Şifre</label>
+                <input type="password" id="client-password" placeholder="Şifrenizi giriniz">
+            </div>
+            <button class="login-btn" id="submit-client-register">Kayıt Ol</button>
+            <button class="login-btn" id="cancel-client-register" style="background-color: #e74c3c; margin-top: 10px;">İptal</button>
+        </div>
+    </div>
+    
+    <!-- Main App Container (Initially hidden) -->
+    <div class="container" id="app-container" style="display: none;">
         <aside class="sidebar">
             <div class="logo">
                 <h2>Hukuk Bürosu</h2>
@@ -568,7 +771,9 @@
                 <li><a href="#" id="profile-link"><i class="fas fa-user"></i> Profil</a></li>
                 <li><a href="#" id="clients-link"><i class="fas fa-users"></i> Müvekkillerim</a></li>
                 <li><a href="#" id="cases-link"><i class="fas fa-gavel"></i> Davalarım</a></li>
+                <li><a href="#" id="my-cases-link"><i class="fas fa-briefcase"></i> Benim Davalarım</a></li>
                 <li><a href="#" id="hearings-link"><i class="fas fa-balance-scale"></i> Duruşmalarım</a></li>
+                <li><a href="#" id="about-link"><i class="fas fa-info-circle"></i> Hakkında</a></li>
                 <li><a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
             </ul>
         </aside>
@@ -893,12 +1098,8 @@
                             <input type="text" id="total-payment" placeholder="TL cinsinden giriniz">
                         </div>
                         <div class="form-group">
-                            <label for="payment-status">Ödeme Durumu</label>
-                            <select id="payment-status">
-                                <option value="1">Ödendi</option>
-                                <option value="2">Kısmi Ödendi</option>
-                                <option value="3">Ödenmedi</option>
-                            </select>
+                            <label for="paid-amount">Yapılan Ödeme Miktarı</label>
+                            <input type="number" id="paid-amount" placeholder="Ödenen miktarı giriniz">
                         </div>
                     </div>
                     
@@ -963,10 +1164,6 @@
                         <div class="payment-item">
                             <div class="payment-label">Kalan</div>
                             <div class="payment-value" id="remaining-payment">7.500 TL</div>
-                        </div>
-                        <div class="payment-item">
-                            <div class="payment-label">Durum</div>
-                            <div class="payment-value" id="payment-status-value">Kısmi Ödendi</div>
                         </div>
                     </div>
                     
@@ -1087,12 +1284,8 @@
                             <input type="text" id="update-total-payment">
                         </div>
                         <div class="form-group">
-                            <label for="update-payment-status">Ödeme Durumu</label>
-                            <select id="update-payment-status">
-                                <option value="1">Ödendi</option>
-                                <option value="2">Kısmi Ödendi</option>
-                                <option value="3">Ödenmedi</option>
-                            </select>
+                            <label for="update-paid-amount">Yapılan Ödeme Miktarı</label>
+                            <input type="number" id="update-paid-amount">
                         </div>
                     </div>
                     
@@ -1151,6 +1344,59 @@
                     
                     <button class="submit-btn" id="submit-update-hearing-btn">Güncelle</button>
                     <button class="action-btn" id="cancel-update-hearing" style="background-color: #e74c3c; margin-left: 10px;">İptal</button>
+                </div>
+            </div>
+            
+            <!-- My Cases Content (Avukatın müvekkil olduğu davalar) -->
+            <div id="my-cases-content" style="display: none;">
+                <div class="header">
+                    <div class="page-title">
+                        <h1>Benim Davalarım</h1>
+                    </div>
+                    <div class="user-info" id="user-profile-btn6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Resmi">
+                        <span>Ömer Faruk Güler</span>
+                    </div>
+                </div>
+                
+                <div class="my-cases-page">
+                    <div class="my-cases-table">
+                        <h2 class="section-title">Avukat Olarak Yer Aldığım Davalar</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Dava No</th>
+                                    <th>Konu</th>
+                                    <th>Avukat</th>
+                                    <th>Başlangıç Tarihi</th>
+                                    <th>Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#101</td>
+                                    <td>Ticari Anlaşmazlık</td>
+                                    <td>Ayşe Demir</td>
+                                    <td>10.01.2023</td>
+                                    <td><span class="status status-active">Aktif</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#102</td>
+                                    <td>Miras Davası</td>
+                                    <td>Mehmet Kaya</td>
+                                    <td>15.02.2023</td>
+                                    <td><span class="status status-pending">Beklemede</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#103</td>
+                                    <td>Kira Anlaşmazlığı</td>
+                                    <td>Fatma Şahin</td>
+                                    <td>20.03.2023</td>
+                                    <td><span class="status status-closed">Kapandı</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
@@ -1229,13 +1475,101 @@
                     </table>
                 </div>
             </div>
+            
+            <!-- About Content -->
+            <div id="about-content" style="display: none;">
+                <div class="header">
+                    <div class="page-title">
+                        <h1>Hakkında</h1>
+                    </div>
+                    <div class="user-info" id="user-profile-btn7">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Resmi">
+                        <span>Ömer Faruk Güler</span>
+                    </div>
+                </div>
+                
+                <div class="about-page">
+                    <h2>Hukuk Bürosu Yönetim Sistemi</h2>
+                    <p>Bu uygulama avukatların müvekkil ve dava yönetimlerini kolaylaştırmak amacıyla geliştirilmiştir.</p>
+                    
+                    <h3 style="margin-top: 20px;">Sistem Özellikleri</h3>
+                    <ul style="margin-left: 20px; line-height: 1.6;">
+                        <li>Müvekkil yönetimi</li>
+                        <li>Dava takip sistemi</li>
+                        <li>Duruşma takvimi</li>
+                        <li>Ödeme takibi</li>
+                        <li>Dava süreç yönetimi</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 20px;">Versiyon Bilgisi</h3>
+                    <p>Versiyon: 1.0.0</p>
+                    <p>Son Güncelleme: 15.06.2023</p>
+                    
+                    <h3 style="margin-top: 20px;">İletişim</h3>
+                    <p>Destek için: destek@hukukburosu.com</p>
+                    <p>Telefon: 0212 123 45 67</p>
+                </div>
+            </div>
         </main>
     </div>
     
     <script>
-        // Sayfa yüklendiğinde dashboard göster
+        // Sayfa yüklendiğinde login sayfasını göster
         document.addEventListener('DOMContentLoaded', function() {
-            showDashboard();
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('app-container').style.display = 'none';
+        });
+        
+        // Giriş butonu
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email && password) {
+                // Başarılı giriş
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('app-container').style.display = 'flex';
+                showDashboard();
+            } else {
+                alert('Lütfen e-posta ve şifrenizi giriniz!');
+            }
+        });
+        
+        // Kayıt butonları
+        document.getElementById('client-register-btn').addEventListener('click', function() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('client-register-page').style.display = 'flex';
+        });
+
+        document.getElementById('lawyer-register-btn').addEventListener('click', function() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('lawyer-register-page').style.display = 'flex';
+        });
+
+        // Kayıt iptal butonları
+        document.getElementById('cancel-client-register').addEventListener('click', function() {
+            document.getElementById('client-register-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+        });
+
+        document.getElementById('cancel-lawyer-register').addEventListener('click', function() {
+            document.getElementById('lawyer-register-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+        });
+
+        // Kayıt formu gönderimleri
+        document.getElementById('submit-client-register').addEventListener('click', function() {
+            // Müvekkil kayıt işlemleri burada
+            alert('Müvekkil kaydı başarılı! Giriş yapabilirsiniz.');
+            document.getElementById('client-register-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+        });
+
+        document.getElementById('submit-lawyer-register').addEventListener('click', function() {
+            // Avukat kayıt işlemleri burada
+            alert('Avukat kaydı başarılı! Giriş yapabilirsiniz.');
+            document.getElementById('lawyer-register-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
         });
         
         // Menü yönlendirmeleri
@@ -1263,15 +1597,28 @@
             setActiveLink(this);
         });
         
+        document.getElementById('my-cases-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showMyCases();
+            setActiveLink(this);
+        });
+        
         document.getElementById('hearings-link').addEventListener('click', function(e) {
             e.preventDefault();
             showHearings();
             setActiveLink(this);
         });
         
+        document.getElementById('about-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showAbout();
+            setActiveLink(this);
+        });
+        
         document.getElementById('logout-link').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Çıkış yapılıyor...');
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('app-container').style.display = 'none';
             setActiveLink(this);
         });
         
@@ -1313,6 +1660,16 @@
         });
         
         document.getElementById('user-profile-btn5').addEventListener('click', function() {
+            showProfile();
+            setActiveLink(document.getElementById('profile-link'));
+        });
+        
+        document.getElementById('user-profile-btn6').addEventListener('click', function() {
+            showProfile();
+            setActiveLink(document.getElementById('profile-link'));
+        });
+        
+        document.getElementById('user-profile-btn7').addEventListener('click', function() {
             showProfile();
             setActiveLink(document.getElementById('profile-link'));
         });
@@ -1435,9 +1792,21 @@
             document.getElementById('update-case-form').style.display = 'none';
         }
         
+        function showMyCases() {
+            hideAllContent();
+            document.getElementById('my-cases-content').style.display = 'block';
+            document.querySelector('.my-cases-page').style.display = 'block';
+        }
+        
         function showHearings() {
             hideAllContent();
             document.getElementById('hearings-content').style.display = 'block';
+        }
+        
+        function showAbout() {
+            hideAllContent();
+            document.getElementById('about-content').style.display = 'block';
+            document.querySelector('.about-page').style.display = 'block';
         }
         
         function hideAllContent() {
@@ -1445,9 +1814,13 @@
             document.getElementById('profile-content').style.display = 'none';
             document.getElementById('clients-content').style.display = 'none';
             document.getElementById('cases-content').style.display = 'none';
+            document.getElementById('my-cases-content').style.display = 'none';
             document.getElementById('hearings-content').style.display = 'none';
+            document.getElementById('about-content').style.display = 'none';
             document.querySelector('.profile-page').style.display = 'none';
             document.querySelector('.clients-page').style.display = 'none';
+            document.querySelector('.my-cases-page').style.display = 'none';
+            document.querySelector('.about-page').style.display = 'none';
         }
         
         function showCaseDetail(caseId) {
@@ -1465,8 +1838,7 @@
                     currentStep: 3,
                     totalPayment: '15.000 TL',
                     paidPayment: '7.500 TL',
-                    remainingPayment: '7.500 TL',
-                    paymentStatus: 'Kısmi Ödendi'
+                    remainingPayment: '7.500 TL'
                 },
                 '2': {
                     title: 'Miras Paylaşımı',
@@ -1480,8 +1852,7 @@
                     currentStep: 1,
                     totalPayment: '12.000 TL',
                     paidPayment: '3.000 TL',
-                    remainingPayment: '9.000 TL',
-                    paymentStatus: 'Ödenmedi'
+                    remainingPayment: '9.000 TL'
                 },
                 '3': {
                     title: 'İş Mahkemesi',
@@ -1495,8 +1866,7 @@
                     currentStep: 9,
                     totalPayment: '20.000 TL',
                     paidPayment: '20.000 TL',
-                    remainingPayment: '0 TL',
-                    paymentStatus: 'Ödendi'
+                    remainingPayment: '0 TL'
                 }
             };
             
@@ -1515,7 +1885,6 @@
             document.getElementById('total-payment').textContent = data.totalPayment;
             document.getElementById('paid-payment').textContent = data.paidPayment;
             document.getElementById('remaining-payment').textContent = data.remainingPayment;
-            document.getElementById('payment-status-value').textContent = data.paymentStatus;
             
             // Durum güncelleme (1. aşama: Beklemede, 9. aşama: Kapandı, diğerleri: Aktif)
             let statusText, statusClass;
@@ -1572,21 +1941,21 @@
                     step: '3',
                     description: 'Aynı evde yaşayan ortaklar arasındaki ticari anlaşmazlık için bu dava açılmıştır.',
                     totalPayment: '15000',
-                    paymentStatus: '2'
+                    paidAmount: '7500'
                 },
                 '2': {
                     status: '1',
                     step: '1',
                     description: 'Miras paylaşımı konusunda anlaşmazlık nedeniyle açılan dava',
                     totalPayment: '12000',
-                    paymentStatus: '3'
+                    paidAmount: '3000'
                 },
                 '3': {
                     status: '3',
                     step: '9',
                     description: 'İşten haksız yere çıkarılma nedeniyle açılan dava',
                     totalPayment: '20000',
-                    paymentStatus: '1'
+                    paidAmount: '20000'
                 }
             };
             
@@ -1596,7 +1965,7 @@
             document.getElementById('update-case-step').value = data.step;
             document.getElementById('update-case-description').value = data.description;
             document.getElementById('update-total-payment').value = data.totalPayment;
-            document.getElementById('update-payment-status').value = data.paymentStatus;
+            document.getElementById('update-paid-amount').value = data.paidAmount;
             
             document.getElementById('update-case-form').style.display = 'block';
             document.getElementById('case-detail').style.display = 'none';
